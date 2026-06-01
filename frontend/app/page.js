@@ -42,7 +42,8 @@ export default function Home() {
                           <span className="text-sm text-blue-400">{event.source?.name || "Global News"}</span>
                           <h2 className="text-2xl find-semibold mt-2 mb-3">{event.title}</h2>
                           <p className="text-gray-400 mb-4">{event.description || "No description available"}</p>
-                          <p className="text-sm text-gray-500">{new Date(event.publishedAt).toLocaleString()}</p>
+                          <p className="text-sm text-gray-500"> Trend Score: {event.trendScore}</p>
+                          <p>{new Date(event.publishedAt).toLocaleString()}</p>
                 </div>
                 ))}
             </section>
