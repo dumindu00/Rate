@@ -1,57 +1,24 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const infos = [
-  {
-    id: 1,
-    title: "Global Climate Summit 2026",
-    category: "Environment",
-    time: "2 hours ago",
-    description: "World leaders gather to discuss urgent climate action strategies."
-  },
-  {
-    id: 2,
-    title: "Global Climate Summit 2026",
-    category: "Technology",
-    time: "2 hours ago",
-    description: "World leaders gather to discuss urgent climate action strategies."
-  },
-  {
-    id: 3,
-    title: "Global Climate Summit 2026",
-    category: "Sports",
-    time: "2 hours ago",
-    description: "World leaders gather to discuss urgent climate action strategies."
-  },
-  {
-    id: 4,
-    title: "Global Climate Summit 2026",
-    category: "Political",
-    time: "2 hours ago",
-    description: "World leaders gather to discuss urgent climate action strategies."
-  },
-  {
-    id: 5,
-    title: "Global Climate Summit 2026",
-    category: "Finance",
-    time: "2 hours ago",
-    description: "World leaders gather to discuss urgent climate action strategies."
-  },
-  {
-    id: 6,
-    title: "Global Climate Summit 2026",
-    category: "Entertainments",
-    time: "2 hours ago",
-    description: "World leaders gather to discuss urgent climate action strategies."
-  }
-  
-]
 
 
 export default function Home() {
-
+  
+  const [events, setEvents] = useState([])
   const [selectedEvent, setSelectedEvent] = useState(null)
+
+
+  useEffect(() => {
+    fetch("http://localhost:5000/events")
+      .then((res) => res.json())
+      .then((data) => {
+        setEvents(data)
+      })
+      .catch((err) => console.log(err))
+  }, [])
+
 
   return (
     <main className="min-h-screen bg-gray-950 text-white px-8 py-10">
@@ -64,18 +31,18 @@ export default function Home() {
 
 
             <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {infos.map((event) => (
+                {events.map((event, index) => (
                   <div
-                      key={event.id}
+                      key={index}
                       className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:scale-105 transition cursor-pointer"
                       onClick={()=>{
                         setSelectedEvent(event)
                       }}>
                     
-                          <span className="text-sm text-blue-400">{event.category}</span>
+                          <span className="text-sm text-blue-400">{event.source?.name || "Global News"}</span>
                           <h2 className="text-2xl find-semibold mt-2 mb-3">{event.title}</h2>
-                          <p className="text-gray-400 mb-4">{event.description}</p>
-                          <p className="text-sm text-gray-500">{event.time}</p>
+                          <p className="text-gray-400 mb-4">{event.description || "No description available"}</p>
+                          <p className="text-sm text-gray-500">{new Date(event.publishedAt).toLocaleString()}</p>
                 </div>
                 ))}
             </section>
@@ -89,9 +56,19 @@ export default function Home() {
                   >
                       ✕
                   </button>
-                  <span className="text-blue-400">{selectedEvent.category}</span>
+                  {/* <span className="text-blue-400">{selectedEvent.category}</span> */}
                   <h2 className="text-3xl font-bold mt-2 mb-4">{selectedEvent.title}</h2>
-                  <p className="text-gray-300 mb-4">{selectedEvent.details}</p>
+                  <p className="text-gray-300 mb-4">{selectedEvent.content || selectedEvent.description}</p>
+
+                    <a
+                      href={selectedEvent.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:underline"
+                    >
+                        Read Full Article
+                    </a>
+
                   <p className="text-sm text-gray-500">Updated: {selectedEvent.time}</p>
                 </div>
               </div>
