@@ -4,7 +4,8 @@ const dotenv = require("dotenv")
 
 const connectDB = require("./config/db")
 const eventRoutes = require("./routes/eventRoutes")
-
+const brandRoutes = require("./routes/brandRoutes")
+const authRoutes = require("./routes/authRoutes")
 
 dotenv.config()
 
@@ -20,6 +21,10 @@ app.use("/", eventRoutes)
 app.get("/", (req, res) => {
     res.send("API Running");
 })
+
+app.use("/", brandRoutes)
+app.use("/", authRoutes)
+
 
 const PORT = process.env.PORT || 5000;
 
