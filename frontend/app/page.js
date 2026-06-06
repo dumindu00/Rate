@@ -8,16 +8,22 @@ export default function Home() {
   
   const [events, setEvents] = useState([])
   const [selectedEvent, setSelectedEvent] = useState(null)
-
+  const [searchTerm, setSearchTerm] = useState("")
+  const [category, setCategory] = useState("All")
 
   useEffect(() => {
-    fetch("http://localhost:5000/events")
-      .then((res) => res.json())
-      .then((data) => {
-        setEvents(data)
-      })
-      .catch((err) => console.log(err))
-  }, [])
+    const fetchEvents = async () => {
+      const response = await fetch(
+        `http://localhost:5000/events?search=${searchTerm}&category=${category}`
+      );
+
+      const data = await response.json()
+
+      setEvents(data)
+    }
+
+    fetchEvents()
+  }, [searchTerm, category])
 
 
   return (
@@ -28,6 +34,29 @@ export default function Home() {
                   Discover the hottest events happening around the world in real time.
             </p>
       </header>
+
+        <input
+          type="text"
+          placeholder="Search events..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="bg-gray-900 p-3 rounded-lg w-full mb-4"
+        />
+
+
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="bg-gray-900 p-3 rounded-lg mb-6"
+        >
+          <option>All</option>
+          <option>Technology</option>
+          <option>Sports</option>
+          <option>Business</option>
+          <option>Politics</option>
+          <option>General</option>
+
+        </select>
 
 
             <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
