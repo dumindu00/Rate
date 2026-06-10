@@ -9,7 +9,8 @@ const {
     voteBrand,
     createBrand,
     updateBrand,
-    deleteBrand
+    deleteBrand,
+    uploadImage
 } = require("../controllers/brandController")
 const { create } = require("../models/Brand")
 
@@ -42,5 +43,6 @@ router.delete(
     deleteBrand
 )
 
+router.post("/upload/logo", protect, uploadImage)
 
 module.exports = router

@@ -8,7 +8,7 @@ const login = async (req, res) => {
 
         const admin = await Admin.findOne({ email })
 
-        if(!email) {
+        if(!admin) {
             return res.status(401).json({
                 message: "Invalid credentials"
             })
