@@ -1,5 +1,5 @@
+const cloudinary = require("../config/cloudinary")
 const Brand = require("../models/Brand")
-
 
 
 const getBrands = async (req, res) => {
@@ -65,6 +65,8 @@ const voteBrand = async (req, res) => {
 
 const createBrand = async (req, res) => {
   try {
+
+    console.log("RECEIVED REQ.BODY IN BACKEND:", req.body);
     const { name, logoUrl } = req.body;
 
     const existingBrand = await Brand.findOne({
@@ -160,7 +162,24 @@ const deleteBrand = async (req, res) => {
 };
 
 
+const uploadImage = async (req, res) => {
 
+  try {
+    
+    const { image } = req.body;
+    if (!image) return res.status(400).json({ message: "Image is required!" })
+
+    const result = await cloudinary.uploader.upload(image, {
+      folder: "brand-voting/logos"
+    })
+
+    res.json({ logoUrl: result.secure_url });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Image upload failed" });
+  }
+}
 
 
 
@@ -170,5 +189,6 @@ module.exports = {
   voteBrand,
   createBrand,
   deleteBrand,
-  updateBrand
+  updateBrand,
+  uploadImage
 };
