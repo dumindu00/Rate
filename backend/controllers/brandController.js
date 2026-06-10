@@ -3,6 +3,7 @@ const Brand = require("../models/Brand")
 
 
 const getBrands = async (req, res) => {
+  
     const brands = await Brand.find();
 
     const formatted = brands.map(brand => {
