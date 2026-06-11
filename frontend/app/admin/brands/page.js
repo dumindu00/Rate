@@ -8,7 +8,7 @@ export default function AdminBrands() {
     const [logoUrl, setLogoUrl] = useState("")
     const [message, setMessage] = useState("")
     const [isSuccess, setIsSuccess] = useState(false)
-
+    const [category, setCategory] = useState("Technology")
 
 
     useEffect(() => {
@@ -56,6 +56,7 @@ export default function AdminBrands() {
 
                 body: JSON.stringify({
                     name,
+                    category,
                     logoUrl
                 })
             }
@@ -114,6 +115,21 @@ export default function AdminBrands() {
             placeholder="Brand Name"
             className="w-full p-3 bg-gray-800 rounded mb-4"
             />
+
+                <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-full p-3 bg-gray-800 rounded mb-4"
+                >
+                    <option>Entertainment</option>
+                    <option>Consumer</option>
+                    <option>Technology</option>
+                    <option>Education</option>
+                    <option>Sports</option>
+                    <option>Automobile</option>
+                    <option>Fashion</option>
+
+                </select>
 
             <ImageUploader
             onUpload={setLogoUrl}

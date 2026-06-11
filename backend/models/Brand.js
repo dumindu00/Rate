@@ -20,6 +20,20 @@ const brandSchema = new mongoose.Schema({
         unique: true
     },
 
+    category: {
+        type: String,
+        required: true,
+        enum: [
+            "Entertainment",
+            "Consumer",
+            "Automobile",
+            "Sports",
+            "Fashion",
+            "Technology",
+            "Education"
+        ]
+    },
+
     logoUrl: {
         type: String,
         required: true
