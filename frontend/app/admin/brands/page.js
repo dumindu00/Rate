@@ -136,7 +136,7 @@ export default function AdminBrands() {
             )}
 
             {message && (
-            <p className={`mt-4 ${isSuccess ?  text-green-400 : 'text-red-400'}`}>
+            <p className={`mt-4 ${isSuccess ?  'text-green-400' : 'text-red-400'}`}>
                 {message}
             </p>
             )}

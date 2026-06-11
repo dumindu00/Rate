@@ -13,7 +13,7 @@ export default function BrandsPage()  {
         try {
             
             const response = await fetch(
-                "http://loaclhost:500/brands"
+                "http://localhost:5000/brands"
             )
 
             const data = await response.json()
@@ -51,7 +51,7 @@ export default function BrandsPage()  {
         try {
             const voterId = localStorage.getItem("voterId")
 
-            const response = await fetch (`http://localhost:5000/brands/${brandId}/vote`, {
+            const response = await fetch(`http://localhost:5000/brands/${brandId}/vote`, {
                 method: "POST",
 
                 headers: {
@@ -137,7 +137,7 @@ export default function BrandsPage()  {
 
                                     <p>Likes: {brand.likes}</p>
 
-                                    <p>Dislikes: {brand.dislike}</p>
+                                    <p>Dislikes: {brand.dislikes}</p>
                                 </div>
 
                             </div>
