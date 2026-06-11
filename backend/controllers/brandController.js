@@ -4,23 +4,52 @@ const Brand = require("../models/Brand")
 
 const getBrands = async (req, res) => {
   
-    const brands = await Brand.find();
+    try {
+    const { category } = req.query;
 
-    const formatted = brands.map(brand => {
-        const total = brand.likes + brand.dislikes
 
-        const percentage = total === 0
-            ? 0
-            : Math.round((brand.likes / total) * 100)
-        
-            return {
-                ...brand.toObject(),
-                percentage
-            }
-        })
+    let filter = {}
 
-        res.json(formatted)
-}
+    if (category && category !== "All") {
+      filter.category = category
+    }
+
+    const brands = await Brand.find(filter)
+
+
+
+    const formatted = brands.map((brand) => {
+
+      const total = brand.likes + brand.dislikes;
+
+      const percentage = total === 0 ? 0 : Math.round((brand.likes / total) * 100)
+
+      return {
+        ...brand.toObject(),
+        percentage
+      }
+    })
+
+    formatted.sort((a, b) => {
+      
+      if (b.likes !== a.likes) {
+        return b.likes - a.likes;
+      }
+
+      return b.percentage - a.percentage
+    });
+
+    res.json(formatted)
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to fetch brands"
+    });
+  }
+};
 
 const voteBrand = async (req, res) => {
   const { id } = req.params;
@@ -68,7 +97,7 @@ const createBrand = async (req, res) => {
   try {
 
     console.log("RECEIVED REQ.BODY IN BACKEND:", req.body);
-    const { name, logoUrl } = req.body;
+    const { name, category, logoUrl } = req.body;
 
     const existingBrand = await Brand.findOne({
       name
@@ -82,6 +111,7 @@ const createBrand = async (req, res) => {
 
     const brand = await Brand.create({
       name,
+      category,
       logoUrl
     });
 
@@ -112,11 +142,11 @@ const updateBrand = async (req, res) => {
       });
     }
 
-    brand.name =
-      req.body.name || brand.name;
 
-    brand.logoUrl =
-      req.body.logoUrl || brand.logoUrl;
+    brand.name = req.body.name || brand.name;
+    brand.category = req.body.category || brand.category;
+    brand.logoUrl = req.body.logoUrl || brand.logoUrl;
+
 
     await brand.save();
 

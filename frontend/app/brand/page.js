@@ -6,6 +6,21 @@ export default function BrandsPage()  {
 
     const [brands, setBrands] = useState([])
     const [loading, setLoading] = useState(true)
+    const [category, setCategory] = useState("All")
+
+
+
+    const categories = [
+            "All",
+            "Entertainment",
+            "Consumer",
+            "Automobile",
+            "Sports",
+            "Fashion",
+            "Technology",
+            "Education"
+        ];
+
 
 
     const fetchBrands = async () => {
@@ -13,7 +28,7 @@ export default function BrandsPage()  {
         try {
             
             const response = await fetch(
-                "http://localhost:5000/brands"
+                `http://localhost:5000/brands?category=${category}`
             )
 
             const data = await response.json()
@@ -41,7 +56,7 @@ export default function BrandsPage()  {
         }
 
         fetchBrands()
-    }, []);
+    }, [category]);
 
     const vote = async (
         brandId,
@@ -92,7 +107,27 @@ export default function BrandsPage()  {
     return (
         <div className="min-h-screen bg-gray-950 text-white p-8">
             <h1 className="text-5xl font-bold mb-10">Brand Voting</h1>
-        
+
+                <div className="flex flex-wrap gap-3 mb-8">
+
+                    {categories.map((cat) => (
+                        <button
+                            key={cat}
+                            onClick={() => setCategory(cat)}
+                            className={`px-4 py-2 rounded-lg transition ${
+                                category === cat
+                                        ? "bg-blue-600"
+                                        : "bg-gray-800"
+                            }`}
+                        >
+                            {cat}
+                        </button>
+                    ))}
+
+                </div>
+
+
+
             <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-6">
 
                     {
@@ -110,6 +145,7 @@ export default function BrandsPage()  {
                                     className="w-24 h-24 object-contain mx-auto mb-4 bg-white rounded-lg p-2"
                                 />
 
+                                <p className="text-xs text-gray-400 mb-3">{brand.category}</p>
 
                                 <p className="text-2xl font-bold text-green-400 mb-4">
                                     {brand.percentage}%
