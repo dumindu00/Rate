@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Navbar from "@/components/Navbar"
+import BackToTopButton from "@/components/BackToTopButton"
 
 
 export default function BrandsPage()  {
@@ -117,6 +118,8 @@ export default function BrandsPage()  {
             <p>Vote for your favorites Brands</p>
             
             <Navbar/>
+
+            <BackToTopButton/>
     </header>
 
 

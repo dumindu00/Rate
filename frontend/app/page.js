@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link"
 import Navbar from "@/components/Navbar";
+import BackToTopButton from "@/components/BackToTopButton";
 
 
 export default function Home() {
@@ -36,6 +37,8 @@ export default function Home() {
             </p>
 
               <Navbar />
+
+              <BackToTopButton/>
 
 
 
