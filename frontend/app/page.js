@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
-
+import Link from "next/link"
+import Navbar from "@/components/Navbar";
 
 
 export default function Home() {
@@ -33,6 +34,11 @@ export default function Home() {
             <p className="text-gray-400 text-lg">
                   Discover the hottest events happening around the world in real time.
             </p>
+
+              <Navbar />
+
+
+
       </header>
 
         <input

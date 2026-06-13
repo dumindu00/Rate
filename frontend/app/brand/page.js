@@ -1,6 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
+import Navbar from "@/components/Navbar"
+
 
 export default function BrandsPage()  {
 
@@ -106,7 +109,16 @@ export default function BrandsPage()  {
 
     return (
         <div className="min-h-screen bg-gray-950 text-white p-8">
+
+
+
+        <header className="mb-11 ">
             <h1 className="text-5xl font-bold mb-10">Brand Voting</h1>
+            <p>Vote for your favorites Brands</p>
+            
+            <Navbar/>
+    </header>
+
 
                 <div className="flex flex-wrap gap-3 mb-8">
 
